@@ -4,8 +4,7 @@ import { ApiOkResponse, ApiProperty } from '@nestjs/swagger';
 import { PrismaClient } from '@prisma/client';
 import { DbService } from './db/db.service';
 
-const prisma = new PrismaClient()
-
+const prisma = new PrismaClient();
 
 class HelloWorldDto {
   @ApiProperty()
@@ -14,17 +13,20 @@ class HelloWorldDto {
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService, private dbService: DbService) { }
+  constructor(
+    private readonly appService: AppService,
+    private dbService: DbService,
+  ) {}
 
   @Get()
   @ApiOkResponse({
-    type: HelloWorldDto
+    type: HelloWorldDto,
   })
   async getHello(): Promise<HelloWorldDto> {
-    const user = await this.dbService.user.findMany({})
-    console.log(user)
+    const user = await this.dbService.user.findMany({});
+    console.log(user);
     return {
-      message: this.appService.getHello()
+      message: this.appService.getHello(),
     };
   }
 }
